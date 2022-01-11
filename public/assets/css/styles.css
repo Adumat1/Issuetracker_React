@@ -1,0 +1,49 @@
+body{
+    background-color: rgb(245, 248, 248);
+}
+@media screen and (min-width: 1080px) {
+    .body {
+      margin-left: 25%;
+      margin-right: 25%;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+  }
+  @media screen and (max-width: 1080px) and (min-width: 600px) {
+    .body {
+      margin-left: 15%;
+      margin-right: 15%;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+  }
+  .navbar {
+      background-color: #6610f2;
+  }
+  .sidebar {
+    background-color: #6610f2;
+}
+h5 {
+    color: #6610f2;
+}
+.navbar-light .navbar-nav .nav-link.active {
+    color: #6610f2;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: #6710f2d8;
+}
+.bttn {
+      background-color: #6610f2;
+  }
+  .bttn:hover{
+    background-color: #6710f2d8;
+}
+.create {
+    background-color: rgb(234, 238, 241);
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 10px;
+}
+.navbar-toggler {
+    padding: 0 0 0 0;
+}
