@@ -5,7 +5,7 @@ const View = () => {
     return (
         <>
             <div className='body'>
-                <header className>
+                <header>
                     <nav className="navbar navbar-dark shadow">
                         <div className="container-fluid justify-content-center">
                             <span className="navbar-brand">
@@ -29,10 +29,10 @@ const View = () => {
                                     <div className="collapse navbar-collapse" id="navbarText">
                                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                             <li className="nav-item">
-                                                <a className="nav-link" href="create.html">Create</a>
+                                                <a className="nav-link" href="/create">Create</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="list.html">List</a>
+                                                <a className="nav-link" href="/">List</a>
                                             </li>
                                         </ul>
                                         {/* <form class="d-flex">
@@ -42,7 +42,8 @@ const View = () => {
                                     </div>
                                 </div>
                             </nav>
-                        </main></div>
+                        </main>
+                    </div>
                     <div className=" row m-2">
                         {/* Title */}
                         <div className="col-md-12">

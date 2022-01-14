@@ -1,11 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react';
+
+let storage = [];
 
 const Create = () => {
+
+    const [show, setShow] = useState(false);
+
+    const Submit = () => {
+
+        let data = {};
+
+        let resolved;
+        const isResolved = document.getElementById("notResolved").checked;
+        if (isResolved === true) {
+            resolved = "false";
+            setShow(true);
+        }
+        // data.id = Math.floor(Math.random() * 100).toString();
+        data.title = document.getElementById("title").value;
+        data.description = document.getElementById("description").value;
+        data.createdOn = document.getElementById("createdOn").value;
+        data.createdBy = document.getElementById("createdBy").value;
+        data.severity = document.getElementById("severity").value;
+        data.assignedTo = document.getElementById("assignedTo").value;
+        data.resolved = resolved;
+        data.resolvedOn = document.getElementById("resolvedOn").value;
+
+        storage = JSON.parse(localStorage.getItem("storagekey") || []);
+        storage.push(data);
+        localStorage.setItem("storagekey", JSON.stringify(storage));
+    }
+
 
     return (
         <>
             <div className='body'>
-                <header className>
+                <header>
                     <nav className="navbar navbar-dark shadow">
                         <div className="container-fluid justify-content-center">
                             <span className="navbar-brand">
@@ -29,10 +59,10 @@ const Create = () => {
                                     <div className="collapse navbar-collapse" id="navbarText">
                                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                             <li className="nav-item">
-                                                <a className="nav-link active" aria-current="page" href="create.html">Create</a>
+                                                <a className="nav-link active" aria-current="page" href="/create">Create</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="list.html">List</a>
+                                                <a className="nav-link" href="/">List</a>
                                             </li>
                                         </ul>
                                         {/* <form class="d-flex">
@@ -58,12 +88,12 @@ const Create = () => {
                             {/* Created on */}
                             <div className="col-sm-6 col-md-4 my-2">
                                 <label htmlFor="createdon" className="form-label">Created On</label>
-                                <input type="date" className="form-control" id="createdon" required />
+                                <input type="date" className="form-control" id="createdOn" required />
                             </div>
                             {/* Created by */}
                             <div className="col-sm-6 col-md-4 my-2">
                                 <label htmlFor="createdby" className="form-label">Created By</label>
-                                <input type="text" className="form-control" id="createdby" placeholder="Created By" required />
+                                <input type="text" className="form-control" id="createdBy" placeholder="Created By" required />
                             </div>
                             {/* Severity */}
                             <div className="col-sm-6 col-md-4 my-2">
@@ -78,26 +108,26 @@ const Create = () => {
                             {/* Assigned to */}
                             <div className="col-sm-6 col-md-4 my-1">
                                 <label htmlFor="assignedto" className="form-label">Assigned To</label>
-                                <input type="text" className="form-control" id="assignedto" placeholder="Assigned To" required />
+                                <input type="text" className="form-control" id="assignedTo" placeholder="Assigned To" required />
                             </div>
                             {/* Resolved? */}
-                            <div className="col-sm-6 col-md-4 my-1">
+                            {show && <div className="col-sm-6 col-md-4 my-1">
                                 <label className="form-label" htmlFor="issue">Is Issue Resolved?</label>
                                 <p>
-                                    <input className="form-check-input" type="radio" name="resolved" id="resolved" defaultValue />
+                                    <input className="form-check-input" type="radio" name="resolved" id="resolved" />
                                     <span>Yes</span>&nbsp;&nbsp;&nbsp;
-                                    <input className="form-check-input" type="radio" name="resolved" id="resolved" defaultValue defaultChecked />
+                                    <input className="form-check-input" type="radio" name="resolved" id="notResolved" checked />
                                     <span>No</span>
                                 </p>
-                            </div>
+                            </div>}
                             {/* Resolved on */}
-                            <div className="col-sm-6 col-md-4 my-1">
+                            {show && <div className="col-sm-6 col-md-4 my-1">
                                 <label htmlFor="resolvedon" className="form-label">Resolved On</label>
-                                <input type="date" className="form-control" id="resolvedon" />
-                            </div>
+                                <input type="date" className="form-control" id="resolvedOn" />
+                            </div>}
                             {/* Button */}
                             <div className="col-sm-12 my-3 text-center">
-                                <button className="bttn btn text-light" type="submit">
+                                <button className="bttn btn text-light" type="submit" onClick={Submit}>
                                     Submit
                                 </button>
                             </div>

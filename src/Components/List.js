@@ -1,11 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+
 
 const List = () => {
+
+    const [issues, setIssues] = useState([]);
+
+    const loadIssues = () => {
+        const getItems = JSON.parse(localStorage.getItem("storagekey"));
+        setIssues(getItems)
+        console.log("getItems", getItems)
+
+    }
+
+    useEffect(() => {
+        loadIssues();
+    }, [])
+
+    console.log("issues", issues)
+
 
     return (
         <>
             <div className='body'>
-                <header className>
+                <header>
                     <nav className="navbar navbar-dark shadow">
                         <div className="container-fluid justify-content-center">
                             <span className="navbar-brand">
@@ -29,10 +46,10 @@ const List = () => {
                                     <div className="collapse navbar-collapse" id="navbarText">
                                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                             <li className="nav-item">
-                                                <a className="nav-link" href="create.html">Create</a>
+                                                <a className="nav-link" href="/create">Create</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link active" aria-current="page" href="list.html">List</a>
+                                                <a className="nav-link active" aria-current="page" href="/">List</a>
                                             </li>
                                         </ul>
                                         <form className="d-flex">
@@ -60,25 +77,31 @@ const List = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td className="text-center">
-                                        <span className="badge bg-success p-2">Resolved <i className="fas fa-check-circle" /></span>
-                                    </td>
-                                    <td>
-                                        <a href="view.html"><i className="fas fa-info-circle" /></a>
-                                    </td>
-                                    <td>
-                                        <a href="update.html"><i className="fas fa-edit" /></a>
-                                    </td>
-                                    <td>
-                                        <a href className="text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fas fa-trash-alt" /></a>
-                                    </td>
-                                </tr>
-                                <tr>
+                                {issues?.map((issue, index) =>
+                                    <tr>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{issue.title}</td>
+                                        <td>{issue.severity}</td>
+                                        <td>{issue.assignedTo}</td>
+                                        <td className="text-center">
+                                            {issue.resolved === "false" ?
+                                                (<span className="badge bg-warning p-2">Not Resolved <i className="fas fa-exclamation-circle" /></span>
+                                                ) : (
+                                                    <span className="badge bg-success p-2">Resolved <i className="fas fa-check-circle" /></span>
+                                                )}
+                                        </td>
+                                        <td>
+                                            <a href="/view"><i className="fas fa-info-circle" /></a>
+                                        </td>
+                                        <td>
+                                            <a href="/edit"><i className="fas fa-edit" /></a>
+                                        </td>
+                                        <td>
+                                            <a className="text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fas fa-trash-alt" /></a>
+                                        </td>
+                                    </tr>
+                                )}
+                                {/* <tr>
                                     <th scope="row">2</th>
                                     <td>Jacob</td>
                                     <td>Thornton</td>
@@ -87,123 +110,15 @@ const List = () => {
                                         <span className="badge bg-warning p-2">Not Resolved <i className="fas fa-exclamation-circle" /></span>
                                     </td>
                                     <td>
-                                        <a href="view.html"><i className="fas fa-info-circle" /></a>
+                                        <a href="/view"><i className="fas fa-info-circle" /></a>
                                     </td>
                                     <td>
-                                        <a href="update.html"><i className="fas fa-edit" /></a>
+                                        <a href="/edit"><i className="fas fa-edit" /></a>
                                     </td>
                                     <td>
-                                        <a href className="text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fas fa-trash-alt" /></a>
+                                        <a className="text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fas fa-trash-alt" /></a>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td className="text-center">
-                                        <span className="badge bg-success p-2">Resolved <i className="fas fa-check-circle" /></span>
-                                    </td>
-                                    <td>
-                                        <a href="view.html"><i className="fas fa-info-circle" /></a>
-                                    </td>
-                                    <td>
-                                        <a href="update.html"><i className="fas fa-edit" /></a>
-                                    </td>
-                                    <td>
-                                        <a href className="text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fas fa-trash-alt" /></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    <td className="text-center">
-                                        <span className="badge bg-warning p-2">Not Resolved <i className="fas fa-exclamation-circle" /></span>
-                                    </td>
-                                    <td>
-                                        <a href="view.html"><i className="fas fa-info-circle" /></a>
-                                    </td>
-                                    <td>
-                                        <a href="update.html"><i className="fas fa-edit" /></a>
-                                    </td>
-                                    <td>
-                                        <a href className="text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fas fa-trash-alt" /></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">5</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td className="text-center">
-                                        <span className="badge bg-success p-2">Resolved <i className="fas fa-check-circle" /></span>
-                                    </td>
-                                    <td>
-                                        <a href="view.html"><i className="fas fa-info-circle" /></a>
-                                    </td>
-                                    <td>
-                                        <a href="update.html"><i className="fas fa-edit" /></a>
-                                    </td>
-                                    <td>
-                                        <a href className="text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fas fa-trash-alt" /></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">6</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    <td className="text-center">
-                                        <span className="badge bg-warning p-2">Not Resolved <i className="fas fa-exclamation-circle" /></span>
-                                    </td>
-                                    <td>
-                                        <a href="view.html"><i className="fas fa-info-circle" /></a>
-                                    </td>
-                                    <td>
-                                        <a href="update.html"><i className="fas fa-edit" /></a>
-                                    </td>
-                                    <td>
-                                        <a href className="text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fas fa-trash-alt" /></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">7</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td className="text-center">
-                                        <span className="badge bg-success p-2">Resolved <i className="fas fa-check-circle" /></span>
-                                    </td>
-                                    <td>
-                                        <a href="view.html"><i className="fas fa-info-circle" /></a>
-                                    </td>
-                                    <td>
-                                        <a href="update.html"><i className="fas fa-edit" /></a>
-                                    </td>
-                                    <td>
-                                        <a href className="text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fas fa-trash-alt" /></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">8</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    <td className="text-center">
-                                        <span className="badge bg-warning p-2">Not Resolved <i className="fas fa-exclamation-circle" /></span>
-                                    </td>
-                                    <td>
-                                        <a href="view.html"><i className="fas fa-info-circle" /></a>
-                                    </td>
-                                    <td>
-                                        <a href="update.html"><i className="fas fa-edit" /></a>
-                                    </td>
-                                    <td>
-                                        <a href className="text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fas fa-trash-alt" /></a>
-                                    </td>
-                                </tr>
+                                </tr> */}
                             </tbody>
                         </table>
                         {/* Modal */}
