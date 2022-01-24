@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 
 
 const List = () => {
 
     const [issues, setIssues] = useState([]);
+    const { id } = useParams();
 
     const loadIssues = () => {
-        const getItems = JSON.parse(localStorage.getItem("storagekey"));
+        const getItems = JSON.parse(localStorage.getItem("issues"));
         setIssues(getItems)
         console.log("getItems", getItems)
 
@@ -15,6 +17,20 @@ const List = () => {
     useEffect(() => {
         loadIssues();
     }, [])
+
+    const deleteIssue = () => {
+        let getIssues = JSON.parse(localStorage.issues);
+        for (var i = 0; i < getIssues.length; i++) {
+            if (id === getIssues[i].id) {
+                localStorage.removeItem(getIssues[i]);
+                // var issueById = getIssues[i];
+                // setIssue(issueById);
+                // setIssue(getIssues[i]);
+
+            }
+
+        }
+    };
 
     console.log("issues", issues)
 
@@ -77,30 +93,32 @@ const List = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {issues?.map((issue, index) =>
-                                    <tr>
-                                        <th scope="row">{index + 1}</th>
-                                        <td>{issue.title}</td>
-                                        <td>{issue.severity}</td>
-                                        <td>{issue.assignedTo}</td>
-                                        <td className="text-center">
-                                            {issue.resolved === "false" ?
-                                                (<span className="badge bg-warning p-2">Not Resolved <i className="fas fa-exclamation-circle" /></span>
-                                                ) : (
-                                                    <span className="badge bg-success p-2">Resolved <i className="fas fa-check-circle" /></span>
-                                                )}
-                                        </td>
-                                        <td>
-                                            <a href="/view"><i className="fas fa-info-circle" /></a>
-                                        </td>
-                                        <td>
-                                            <a href="/edit"><i className="fas fa-edit" /></a>
-                                        </td>
-                                        <td>
-                                            <a className="text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fas fa-trash-alt" /></a>
-                                        </td>
-                                    </tr>
-                                )}
+                                {issues && issues.length > 0 &&
+                                    issues?.map((issue, index) =>
+                                        <tr>
+                                            <th scope="row">{index + 1}</th>
+                                            <td>{issue.title}</td>
+                                            <td>{issue.severity}</td>
+                                            <td>{issue.assignedTo}</td>
+                                            <td className="text-center">
+                                                {issue.resolved === "false" ?
+                                                    (<span className="badge badge-sm bg-warning">Not Resolved <i className="fas fa-exclamation-circle" /></span>
+                                                    ) : (
+                                                        <span className="badge badge-sm bg-success">Resolved <i className="fas fa-check-circle" /></span>
+                                                    )}
+                                            </td>
+                                            <td>
+                                                <a href="/view"><i className="fas fa-info-circle" /></a>
+                                            </td>
+                                            <td>
+                                                <a href="/edit"><i className="fas fa-edit" /></a>
+                                                {/* <a href={`/edit/${18}`}><i className="fas fa-edit" /></a> */}
+                                            </td>
+                                            <td>
+                                                <a className="text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="fas fa-trash-alt" /></a>
+                                            </td>
+                                        </tr>
+                                    )}
                                 {/* <tr>
                                     <th scope="row">2</th>
                                     <td>Jacob</td>
@@ -121,25 +139,31 @@ const List = () => {
                                 </tr> */}
                             </tbody>
                         </table>
-                        {/* Modal */}
-                        <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div className="modal-dialog modal-dialog-centered modal-sm">
-                                <div className="modal-content">
-                                    {/* <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div> */}
-                                    <div className="modal-body">
-                                        <p>Are you sure you want to delete?</p>
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button type="button" className="bttn btn btn-sm text-light" data-bs-dismiss="modal">No</button>
-                                        <button type="button" className="btn btn-sm btn-danger">Delete</button>
-                                    </div>
+                    </div>
+                    {issues.length === 0 &&
+                        <div className='row d-flex'>
+                            <strong className='align-items-center'>No Issues Record</strong>
+                        </div>
+                    }
+                    {/* Modal */}
+                    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div className="modal-dialog modal-dialog-centered modal-sm">
+                            <div className="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    <p>Are you sure you want to delete?</p>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="bttn btn btn-sm text-light" data-bs-dismiss="modal">No</button>
+                                    <button type="button" className="btn btn-sm btn-danger" onClick={deleteIssue()}>Delete</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </>

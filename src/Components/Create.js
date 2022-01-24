@@ -4,7 +4,7 @@ let storage = [];
 
 const Create = () => {
 
-    const [show, setShow] = useState(false);
+    // const [show, setShow] = useState(false);
 
     const Submit = () => {
 
@@ -14,9 +14,9 @@ const Create = () => {
         const isResolved = document.getElementById("notResolved").checked;
         if (isResolved === true) {
             resolved = "false";
-            setShow(true);
+            // setShow(true);
         }
-        // data.id = Math.floor(Math.random() * 100).toString();
+        data.id = Math.floor(Math.random() * 100).toString();
         data.title = document.getElementById("title").value;
         data.description = document.getElementById("description").value;
         data.createdOn = document.getElementById("createdOn").value;
@@ -26,9 +26,18 @@ const Create = () => {
         data.resolved = resolved;
         data.resolvedOn = document.getElementById("resolvedOn").value;
 
-        storage = JSON.parse(localStorage.getItem("storagekey") || []);
+        storage = JSON.parse(localStorage.getItem("issues")) || [];
         storage.push(data);
-        localStorage.setItem("storagekey", JSON.stringify(storage));
+        localStorage.setItem("issues", JSON.stringify(storage));
+
+        //     let storage;
+        //     if (localStorage.getItem("issues") === null) {
+        //         storage = [];
+        //     } else {
+        //         storage = JSON.parse(localStorage.getItem("issues") || "[]");
+        //         storage.push(data);
+        //         localStorage.setItem("issues", JSON.stringify(storage));
+        //     }
     }
 
 
@@ -74,7 +83,7 @@ const Create = () => {
                             </nav>
                         </main></div>
                     <div className="m-2">
-                        <form className="row" action>
+                        <form className="row" action onSubmit={Submit}>
                             {/* Title */}
                             <div className="col-sm-12 mb-2">
                                 <label htmlFor="title" className="form-floating">Title</label>
@@ -111,7 +120,7 @@ const Create = () => {
                                 <input type="text" className="form-control" id="assignedTo" placeholder="Assigned To" required />
                             </div>
                             {/* Resolved? */}
-                            {show && <div className="col-sm-6 col-md-4 my-1">
+                            {<div className="col-sm-6 col-md-4 my-1">
                                 <label className="form-label" htmlFor="issue">Is Issue Resolved?</label>
                                 <p>
                                     <input className="form-check-input" type="radio" name="resolved" id="resolved" />
@@ -121,13 +130,13 @@ const Create = () => {
                                 </p>
                             </div>}
                             {/* Resolved on */}
-                            {show && <div className="col-sm-6 col-md-4 my-1">
+                            {<div className="col-sm-6 col-md-4 my-1">
                                 <label htmlFor="resolvedon" className="form-label">Resolved On</label>
                                 <input type="date" className="form-control" id="resolvedOn" />
                             </div>}
                             {/* Button */}
                             <div className="col-sm-12 my-3 text-center">
-                                <button className="bttn btn text-light" type="submit" onClick={Submit}>
+                                <button className="bttn btn text-light" type="submit">
                                     Submit
                                 </button>
                             </div>

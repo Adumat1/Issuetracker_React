@@ -1,10 +1,94 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams } from "react-router-dom";
+
 
 const Edit = () => {
 
-    const getItems = JSON.parse(localStorage.getItem("storagekey"));
+    const { id } = useParams();
 
-    console.log("items", { getItems })
+    // let data = {};
+
+    // let resolved;
+    // const isResolved = document.getElementById("notResolved").checked;
+    // if (isResolved === true) {
+    //     resolved = "false";
+    //     // setShow(true);
+    // }
+    // data.id = issue.id;
+    // data.title = document.getElementById("title").value;
+    // data.description = document.getElementById("description").value;
+    // data.createdOn = document.getElementById("createdOn").value;
+    // data.createdBy = document.getElementById("createdBy").value;
+    // data.severity = document.getElementById("severity").value;
+    // data.assignedTo = document.getElementById("assignedTo").value;
+    // data.resolved = resolved;
+    // data.resolvedOn = document.getElementById("resolvedOn").value;
+
+
+    const [issue, setIssue] = useState({});
+
+    useEffect(() => {
+        let getIssues = JSON.parse(localStorage.issues);
+        for (var i = 0; i < getIssues.length; i++) {
+            if (id === getIssues[i].id) {
+                // var issueById = getIssues[i];
+                // setIssue(issueById);
+                setIssue(getIssues[i]);
+
+            }
+            // setIssues(issueById);
+            // console.log("issueById:", issueById);
+            console.log("issue", issue);
+
+        }
+
+    }, []);
+
+    // useEffect(() => {
+    //     setItemToEdit(event);
+    // }, [event]);
+
+
+    // const editIssue = (issuesToEdit) => {
+
+    //     let getIssues = JSON.parse(localStorage.getItem('issues'));
+    //     for (var i = 0; i < getIssues.length; i++) {
+    //         if (id === getIssues[i].id) {
+    //             const issue = getIssues[i];
+
+    //         }
+
+    //     }
+    //     console.log("getIssues", getIssues);
+    //     localStorage.setItem('issues', JSON.stringify(getIssues));
+
+    //     let data = {};
+
+    //     let resolved;
+    //     const isResolved = document.getElementById("notResolved").checked;
+    //     if (isResolved === true) {
+    //         resolved = "false";
+    //         // setShow(true);
+    //     }
+    //     data.id = issues.id;
+    //     data.title = document.getElementById("title").value;
+    //     data.description = document.getElementById("description").value;
+    //     data.createdOn = document.getElementById("createdOn").value;
+    //     data.createdBy = document.getElementById("createdBy").value;
+    //     data.severity = document.getElementById("severity").value;
+    //     data.assignedTo = document.getElementById("assignedTo").value;
+    //     data.resolved = resolved;
+    //     data.resolvedOn = document.getElementById("resolvedOn").value;
+
+    //     storage = JSON.parse(localStorage.getItem("issues")) || [];
+    //     storage.push(data);
+    //     localStorage.setItem("issues", JSON.stringify(storage));
+
+    // }
+
+    // const getItems = JSON.parse(localStorage.getItem("issues"));
+
+    // console.log("items", { getItems })
 
     return (
         <>
@@ -48,32 +132,33 @@ const Edit = () => {
                             </nav>
                         </main></div>
                     <div className="m-2">
-                        <form className="row" action>
+
+                        <form className="row" action >
                             {/* Title */}
                             <div className="col-sm-12 mb-2">
                                 <label htmlFor="title" className="form-floating">Title</label>
-                                <input type="text" className="form-control" id="title" placeholder="Issue Title" defaultValue={getItems.title} required />
+                                <input type="text" className="form-control" id="title" placeholder="Issue Title" defaultValue="s" required />
                             </div>
                             {/* Descripton */}
                             <div className="col-sm-12 my-2">
                                 <label htmlFor="description" className="form-label">Description</label>
-                                <input type="text" className="form-control" id="description" placeholder="Write something about the issue" required />
+                                <input type="text" className="form-control" id="description" placeholder="Write something about the issue" defaultValue="s" required />
                             </div>
                             {/* Created on */}
                             <div className="col-sm-6 col-md-4 my-2">
                                 <label htmlFor="createdon" className="form-label">Created On</label>
-                                <input type="date" className="form-control" id="createdon" required />
+                                <input type="date" className="form-control" id="createdOn" defaultValue="s" required />
                             </div>
                             {/* Created by */}
                             <div className="col-sm-6 col-md-4 my-2">
                                 <label htmlFor="createdby" className="form-label">Created By</label>
-                                <input type="text" className="form-control" id="createdby" placeholder="Created By" required />
+                                <input type="text" className="form-control" id="createdBy" placeholder="Created By" defaultValue="s" required />
                             </div>
                             {/* Severity */}
                             <div className="col-sm-6 col-md-4 my-2">
                                 <label htmlFor="severity" className="form-label">Severity</label>
                                 <p>
-                                    <select id="severity" className="form-select">
+                                    <select id="severity" className="form-select" defaultValue="s">
                                         <option>--Select--</option>
                                         <option>Critical</option>
                                         <option>Moderate</option>
@@ -84,22 +169,22 @@ const Edit = () => {
                             {/* Assigned to */}
                             <div className="col-sm-6 col-md-4 my-1">
                                 <label htmlFor="assignedto" className="form-label">Assigned To</label>
-                                <input type="text" className="form-control" id="assignedto" placeholder="Assigned To" required />
+                                <input type="text" className="form-control" id="assignedTo" placeholder="Assigned To" defaultValue="s" required />
                             </div>
                             {/* Resolved? */}
                             <div className="col-sm-6 col-md-4 my-1">
                                 <label className="form-label" htmlFor="issue">Is Issue Resolved?</label>
                                 <p>
-                                    <input className="form-check-input" type="radio" name="resolved" id="resolved" defaultValue />
+                                    <input className="form-check-input" type="radio" name="resolved" id="resolved" />
                                     <span>Yes</span>&nbsp;&nbsp;&nbsp;
-                                    <input className="form-check-input" type="radio" name="resolved" id="resolved" defaultValue defaultChecked />
+                                    <input className="form-check-input" type="radio" name="resolved" id="notResolved" defaultChecked />
                                     <span>No</span>
                                 </p>
                             </div>
                             {/* Resolved on */}
                             <div className="col-sm-6 col-md-4 my-1">
                                 <label htmlFor="resolvedon" className="form-label">Resolved On</label>
-                                <input type="date" className="form-control" id="resolvedon" />
+                                <input type="date" className="form-control" id="resolvedOn" />
                             </div>
                             {/* Button */}
                             <div className="col-sm-12 my-3 text-center">
